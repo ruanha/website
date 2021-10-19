@@ -23,7 +23,7 @@ module ReactComponents
               debugging_instructions: debugging_instructions
             },
             tests: solution.exercise.practice_exercise? ? {
-              tests: solution.tests,
+              tests: SerializeTestFiles.(solution.tests),
               highlightjs_language: track.highlightjs_language
             } : nil,
             results: {

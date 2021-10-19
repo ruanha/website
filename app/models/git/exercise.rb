@@ -132,7 +132,11 @@ module Git
     end
 
     def tests
-      read_file_blob(test_filepaths.first)
+      test_filepaths.index_with do |filepath|
+        read_file_blob(filepath)
+      end
+    rescue StandardError
+      {}
     end
 
     # Files that should be transported
