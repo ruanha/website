@@ -597,6 +597,3 @@ if (!Object.entries) {
     return resArray
   }
 }
-
-import { annotateLanding } from '../utils/annotate-landing'
-annotateLanding()
