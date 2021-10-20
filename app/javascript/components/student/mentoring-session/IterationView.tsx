@@ -1,5 +1,10 @@
 import React from 'react'
-import { Iteration, IterationStatus, MentorDiscussion } from '../../types'
+import {
+  Iteration,
+  IterationStatus,
+  MentorDiscussion,
+  TestFile,
+} from '../../types'
 import { IterationsList } from '../../mentoring/session/IterationsList'
 import { FilePanel } from '../../mentoring/session/FilePanel'
 import { IterationHeader } from './iteration-view/IterationHeader'
@@ -26,7 +31,7 @@ export const IterationView = ({
 }: {
   iterations: readonly Iteration[]
   instructions?: string
-  tests?: string
+  tests?: readonly TestFile[]
   currentIteration: Iteration
   onClick: (iteration: Iteration) => void
   language: string

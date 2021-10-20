@@ -27,6 +27,7 @@ import {
   MentorSessionTrack as Track,
   MentorSessionExercise as Exercise,
   MentoringSessionExemplarFile,
+  TestFile,
 } from '../types'
 
 import { useIterationScrolling } from './session/useIterationScrolling'
@@ -56,7 +57,7 @@ export type SessionProps = {
   discussion: Discussion
   iterations: readonly Iteration[]
   instructions: string
-  tests: string
+  tests: readonly TestFile[]
   userHandle: string
   notes: string
   outOfDate: boolean

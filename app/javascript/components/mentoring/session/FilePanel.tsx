@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react'
 import { Tab, TabContext } from '../../common/Tab'
 import { FileViewer } from './FileViewer'
-import { File } from '../../types'
+import { File, TestFile } from '../../types'
 
 const TabsContext = createContext<TabContext>({
   current: '',
@@ -19,7 +19,7 @@ export const FilePanel = ({
   language: string
   indentSize: number
   instructions?: string
-  tests?: string
+  tests?: readonly TestFile[]
 }): JSX.Element | null => {
   const [tab, setTab] = useState<string>('')
 
@@ -90,16 +90,20 @@ export const FilePanel = ({
           ) : null}
           {tests ? (
             <Tab.Panel key="tests" id="tests" context={TabsContext}>
-              <FileViewer
-                file={{
-                  type: 'exercise',
-                  filename: 'Tests',
-                  digest: '',
-                  content: tests,
-                }}
-                language={language}
-                indentSize={indentSize}
-              />
+              {tests.map((test) => {
+                return (
+                  <FileViewer
+                    key={test.filename}
+                    file={{
+                      ...test,
+                      type: 'exercise',
+                      digest: '',
+                    }}
+                    language={language}
+                    indentSize={indentSize}
+                  />
+                )
+              })}
             </Tab.Panel>
           ) : null}
         </div>
