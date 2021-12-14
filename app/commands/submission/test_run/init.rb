@@ -26,17 +26,28 @@ class Submission
             exercise_filepaths: exercise_filepaths
           }
         ).tap do
-          case type
-          when :solution
-            submission.solution.update_published_iteration_head_tests_status!(:queued)
-          else
-            submission.tests_queued!
-          end
+          update_status!
         end
       end
 
       private
       attr_reader :submission, :git_sha, :type, :run_in_background
+
+      # rubocop:disable Style/IfUnlessModifier
+      # rubocop:disable Style/GuardClause
+      def update_status!
+        return submission.tests_queued! unless type == :solution
+
+        if submission == solution.latest_submission
+          submission.solution.update_latest_iteration_head_tests_status!(:queued)
+        end
+
+        if submission == solution.latest_published_iteration_submission
+          submission.solution.update_published_iteration_head_tests_status!(:queued)
+        end
+      end
+      # rubocop:enable Style/GuardClause
+      # rubocop:enable Style/IfUnlessModifier
 
       memoize
       delegate :solution, to: :submission

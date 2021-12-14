@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_01_162159) do
+ActiveRecord::Schema.define(version: 2021_12_14_145146) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -528,6 +528,7 @@ ActiveRecord::Schema.define(version: 2021_12_01_162159) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "published_iteration_head_tests_status", default: 0, null: false
+    t.integer "latest_iteration_head_tests_status", limit: 1, default: 0, null: false
     t.index ["exercise_id"], name: "index_solutions_on_exercise_id"
     t.index ["num_stars", "id"], name: "solutions_popular_new", order: :desc
     t.index ["public_uuid"], name: "index_solutions_on_public_uuid", unique: true
@@ -582,6 +583,7 @@ ActiveRecord::Schema.define(version: 2021_12_01_162159) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "git_important_files_hash", limit: 50
     t.string "git_sha", limit: 50
+    t.index ["git_important_files_hash", "submission_id"], name: "submissions-git-optimiser-2"
     t.index ["submission_id"], name: "index_submission_test_runs_on_submission_id"
     t.index ["uuid"], name: "index_submission_test_runs_on_uuid", unique: true
   end
@@ -598,6 +600,11 @@ ActiveRecord::Schema.define(version: 2021_12_01_162159) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "git_important_files_hash", limit: 50
+    t.index ["git_important_files_hash", "solution_id"], name: "submissions-git-optimiser-2"
+    t.index ["git_sha", "git_important_files_hash", "solution_id"], name: "ihid-3"
+    t.index ["git_sha", "solution_id", "git_important_files_hash"], name: "ihid-1"
+    t.index ["git_sha", "solution_id", "git_important_files_hash"], name: "submissions-git-optimiser-1"
+    t.index ["solution_id", "git_sha", "git_important_files_hash"], name: "ihid-2"
     t.index ["solution_id"], name: "index_submissions_on_solution_id"
     t.index ["uuid"], name: "index_submissions_on_uuid", unique: true
   end
